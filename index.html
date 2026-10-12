@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Калькулятор стоимости заказа</title>
+</head>
+<body>
+    <h2>Калькулятор стоимости заказа</h2>
+
+    <label for="product">Выберите товар:</label>
+    <select id="product">
+        <option value="500" data-name="Кружка">Кружка — 500 руб.</option>
+        <option value="1500" data-name="Футболка">Футболка — 1500 руб.</option>
+        <option value="3500" data-name="Наушники">Наушники — 3500 руб.</option>
+        <option value="12000" data-name="Смартфон">Смартфон — 12000 руб.</option>
+    </select>
+
+    <label for="quantity">Количество:</label>
+    <input type="number" id="quantity" min="1" value="1">
+
+    <button id="calcBtn">Подсчитать стоимость</button>
+
+    <p id="result"></p>
+
+    <script>
+        // Кнопка подсчёта стоимости
+        document.getElementById('calcBtn').addEventListener('click', function () {
+            var select = document.getElementById('product');
+            var quantityInput = document.getElementById('quantity');
+            var result = document.getElementById('result');
+
+            var price = Number(select.value);           // цена выбранного товара
+            var name = select.options[select.selectedIndex].text.split(' — ')[0];
+            var quantity = Number(quantityInput.value); // введённое количество
+
+            // Проверка корректности ввода
+            if (!Number.isInteger(quantity) || quantity < 1) {
+                result.className = 'error';
+                result.textContent = 'Введите целое количество не меньше 1.';
+                return;
+            }
+
+            var total = price * quantity;
+            result.className = '';
+            result.textContent = 'Стоимость заказа: ' + name +
+                ' × ' + quantity + ' шт. = ' + total + ' руб.';
+        });
+    </script>
+</body>
+</html>
